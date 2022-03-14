@@ -5,72 +5,61 @@
 
 ## Purpose
 
-The purpose of this study is to design and develop a DNN based deep learning model for prediction of future bitcoin prices while examining if there is a correlation between social media and cryptocurrencies. 
+The purpose of this study is to design and develop a DNN based deep learning model for prediction of future bitcoin prices while examining if there is a correlation between social media and cryptocurrencies. Even though Long short-term memory models are popular for time series prediction, Deep Neural Network was chosen for model because to focus on how social media affects cryptocurrency prices, rather than other factors.
 
 
 ## Dataset Description
 
-Open-source dataset "SARS-COV-2 Ct-Scan Dataset" is used to train the model. This dataset contains 1252 CT scans that are positive for SARS-CoV-2 infection (COVID-19) and 1230 CT scans for patients non-infected by SARS-CoV-2, 2482 CT scans in total. CT scans belong to real patients in hospitals from Sao Paulo, Brazil.
+Open-source dataset "Bitcoin 17.7 million Tweets and price" is used to train the model. This dataset contains the average sentiment of all tweets about bitcoin from 01/08/2017 until 21/01/2019. It also contains the financial data of bitcoin for that same period. This dataset contains 14 different values to use, such as opening price of bitcoin, number of negative tweets. There was some missing data for some specific days, but i removed all of the values belonging to those days by hand. I also removed some columns that I thought were not needed for my project. In conclusion, i just used the columns of "Count_Negatives", "Count_Neutrals", "Count_Positives", "Open" and "Close.
 
 This dataset is can be found at: 
-www.kaggle.com/plameneduardo/sarscov2-ctscan-dataset
+www.kaggle.com/jaimebadiola/bitcoin-tweets-and-price?select=Data_To_Hourervals_no_filter.csv
 
 ## Model Visualization
-![](https://i.imgur.com/Dxyh7u9.png)
+![](https://i.imgur.com/aFQqtfI.png)
 
-## Used Libraries and Tools
+## Used Libraries
 - Tensorflow
 - Keras
 - Sklearn
-- Imutils
 - Matplotlib
+- Joblib
+- Pandas
 - Numpy
-- OpenCV
-- VGG19
-- Pathlib
 
 ## How to use?
 
 ### Training
-Train your own model by using "Model_Training.ipynb". Just enter your dataset's path into the following code, and then execute. You can also skip this process. All you have to do is using "model.h5" and "weights.hdf5" that is ready for prediction.
+Train your own model by using "Training.ipynb". Just enter your dataset's path into the following code, and then execute. You can also skip this process. All you have to do is using "model.h5" and "scaler.bin" files from main.
 
 ```
-dataset= # Your dataset's path
+dataset = pd.read_csv(
+    "/content/drive/MyDrive/TwitterBitcoinTahminSistemi/Dataset/TwitterDataset.csv" , delimiter=';')
+dataset.head()
 ```
 
 ### Prediction
-There are 2 ways to predict your own image. You can either use "Predict_An_Image.ipynb" to predict a single image, or use "Predict_Multiple_Images.ipynb" to predict multiple images in a file. If you don't want to train your own model, you can use already trained model "model.h5" and "weights.hdf5".
+Use "Prediction.ipynb" to predict the bitcoin price after an hour. If you don't want to train your own model, you can use already trained model "model.h5" and "scaler.bin" from main.
 
-#### 1-) Enter your model's and weight's path into the following code.
+#### 1-) Enter your model's and scaling parameter's path into the following code.
 ```
-model = keras.models.load_model(#' Please enter your model's path here')
-model.load_weights(#' Please enter your weight's path here')
+def prediction(Negative, Neutral, Positive, Open ):
+  model = load_model(# Your model's path)
+  scaler=load(# Your scaling parameter's path)
 ```
-#### 2.1-) If you are using "Predict_An_Image.ipynb"
+#### 2-) Enter your values to predict.
 
-Enter your image's path into the following code.
 ```
-ImagePath = #' Please enter the path of the image you want to predict'
-```
-
-#### 2.2-) If you are using "Predict_Multiple_Images.ipynb".
-
-Enter your folder's path that contains CT images into the following code.
-```
-path = #' Please enter the path of the folder that contains images you want to predict'
-imagePaths = list(paths.list_images(path))
+# Please enter values in such way : prediction(Number of Negative Tweets, Number of Neutral Tweets, Number of Positive Tweets, Current Bitcoin Value)
+prediction(148,200,200,2980.81)
 ```
 #### 3-) Execute.
+The result:
+```
+1/1 [==============================] - 10s 10s/step
+[[3000.3662]]
+```
 
 ## Conclusion
-The final accuracy of the model is %88. You can also examine model's training history from the following figures:
+Two metrics used to measure accuracy in this project. Mean absolute error of the model is 98 and mean absolute percentage error is 1.47%. You can also examine model's training history from the following figure:
 ![](https://i.imgur.com/7GHgVvn.png)
-![](https://i.imgur.com/Prk1ha5.png)
-
-## Citation
-
-```
-Soares, Eduardo, Angelov, Plamen, Biaso, Sarah, Higa Froes, Michele, and Kanda Abe, Daniel. "SARS-CoV-2 CT-scan dataset: A large dataset of real patients CT scans for SARS-CoV-2 identification." medRxiv (2020). doi: https://doi.org/10.1101/2020.04.24.20078584.
-Angelov, P., & Soares, E. (2020). Towards explainable deep neural networks (xDNN). Neural Networks, 130, 185-194.
-}
-```
