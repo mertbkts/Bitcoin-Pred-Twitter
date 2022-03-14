@@ -1,1 +1,1 @@
-# Bitcoin-Price-Prediction-Using-Twitter-Sentiment-Analysis
+# Bitcoin Price Prediction Using Twitter Sentiment Analysis
