@@ -12,7 +12,7 @@ The purpose of this study is to design and develop a DNN based deep learning mod
 
 Open-source dataset "Bitcoin 17.7 million Tweets and price" is used to train the model. This dataset contains the average sentiment of all tweets about bitcoin from 01/08/2017 until 21/01/2019. It also contains the financial data of bitcoin for that same period. This dataset contains 14 different values to use, such as opening price of bitcoin, number of negative tweets. There was some missing data for some specific days, but I removed all of the values belonging to those days by hand. I also removed some columns that I thought were not needed for my project. In conclusion, I just used the columns of "Count_Negatives", "Count_Neutrals", "Count_Positives", "Open" and "Close.
 
-This dataset is can be found at: 
+This dataset can be found at: 
 www.kaggle.com/jaimebadiola/bitcoin-tweets-and-price?select=Data_To_Hourervals_no_filter.csv
 
 ## Model Visualization
